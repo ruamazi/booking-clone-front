@@ -115,3 +115,42 @@ export const updateMyHotelById = async (hotelFormData: FormData) => {
   }
   return resp.json();
 };
+
+export type SearchParamsType = {
+  destination?: string;
+  checkIn?: string;
+  checkOut?: string;
+  adultCount?: string;
+  childCount?: string;
+  page?: string;
+};
+
+export type HotelSearchResponse = {
+  data: HotelType[];
+  pagination: {
+    total: number;
+    page: number;
+    pages: number;
+  };
+};
+
+export const searchHotels = async (
+  searchParams: SearchParamsType
+): Promise<HotelSearchResponse> => {
+  const queryParams = new URLSearchParams();
+  queryParams.append("destination", searchParams.destination || "");
+  queryParams.append("checkIn", searchParams.checkIn || "");
+  queryParams.append("checkOut", searchParams.checkOut || "");
+  queryParams.append("adultCount", searchParams.adultCount || "");
+  queryParams.append("childCount", searchParams.childCount || "");
+  queryParams.append("page", searchParams.page || "");
+
+  const resp = await fetch(
+    `${backendBaseUrl}/api/hotels/search?${queryParams}`
+  );
+
+  if (!resp.ok) {
+    throw new Error("Failed to find hotel.");
+  }
+  return resp.json();
+};
