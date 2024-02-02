@@ -25,7 +25,7 @@ const Signin = () => {
     onSuccess: async () => {
       showToast({ message: "Sign in Successful!", type: "SUCCESS" });
       await queryClient.invalidateQueries("validateToken");
-      navigate("/");
+      navigate(location.state?.from?.pathname || "/");
     },
     onError: (error: Error) => {
       showToast({ message: error.message, type: "ERROR" });
