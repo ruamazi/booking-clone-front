@@ -123,6 +123,11 @@ export type SearchParamsType = {
   adultCount?: string;
   childCount?: string;
   page?: string;
+  facilities?: string[];
+  types?: string[];
+  stars?: string[];
+  maxPrice?: string;
+  sortOption?: string;
 };
 
 export type HotelSearchResponse = {
@@ -145,12 +150,21 @@ export const searchHotels = async (
   queryParams.append("childCount", searchParams.childCount || "");
   queryParams.append("page", searchParams.page || "");
 
+  queryParams.append("maxPrice", searchParams.maxPrice || "");
+  queryParams.append("sortOption", searchParams.sortOption || "");
+  searchParams.facilities?.forEach((facility) =>
+    queryParams.append("facilities", facility)
+  );
+  searchParams.types?.forEach((type) => queryParams.append("types", type));
+  searchParams.stars?.forEach((star) => queryParams.append("stars", star));
+
   const resp = await fetch(
     `${backendBaseUrl}/api/hotels/search?${queryParams}`
   );
+  const data = await resp.json();
 
   if (!resp.ok) {
     throw new Error("Failed to find hotel.");
   }
-  return resp.json();
+  return data;
 };

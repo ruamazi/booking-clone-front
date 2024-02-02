@@ -10,8 +10,9 @@ const Searchbar = () => {
   const [destination, setDestination] = useState<string>(search.destination);
   const [checkIn, setCheckIn] = useState<Date>(search.checkIn);
   const [chickOut, setChickOut] = useState<Date>(search.checkOut);
-  const [childCount, setChildCount] = useState<number>(search.childCount);
   const [adultCount, setAdultCount] = useState<number>(search.adultCount);
+  const [childCount, setChildCount] = useState<number>(search.childCount);
+
   const navigate = useNavigate();
 
   const handleSubmit = (e: FormEvent) => {
@@ -20,8 +21,8 @@ const Searchbar = () => {
       destination,
       checkIn,
       chickOut,
-      childCount,
-      adultCount
+      adultCount,
+      childCount
     );
     navigate("/search");
   };
@@ -39,10 +40,10 @@ const Searchbar = () => {
       <div className="flex items-center flex-1 bg-white p-2">
         <MdTravelExplore size={20} className="mr-2 text-black" />
         <input
+          className="text-md w-full focus:outline-none"
           type="text"
           placeholder="Where are you going?"
           value={destination}
-          className="text-md w-full focus:outline-none"
           onChange={(e) => setDestination(e.target.value)}
         />
       </div>
