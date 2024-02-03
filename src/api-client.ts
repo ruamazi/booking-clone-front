@@ -250,3 +250,25 @@ export const createRoomBooking = async (formData: BookingFormData) => {
     throw new Error("Error booking room");
   }
 };
+
+export const fetchMyBookings = async (): Promise<HotelType[]> => {
+  const resp = await fetch(`${backendBaseUrl}/api/my-bookings`, {
+    credentials: "include",
+  });
+  const data = await resp.json();
+  if (!resp.ok) {
+    throw new Error("Error getting bookings");
+  }
+
+  console.log(data);
+
+  return data;
+};
+
+export const fetchHotels = async (): Promise<HotelType[]> => {
+  const response = await fetch(`${backendBaseUrl}/api/hotels`);
+  if (!response.ok) {
+    throw new Error("Error fetching hotels");
+  }
+  return response.json();
+};
